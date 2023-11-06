@@ -1,18 +1,19 @@
 random_word = 'building'
-hidden_word = ''
 positions = []
 
-# Create same length word with hiding chars
-random_word.each_char do |char|
-  hidden_word += "_"
+def create_hidden_word(random_word)
+  # Create same length word with hiding chars
+  hidden_word  = ''
+  random_word.each_char do |char|
+
+    hidden_word += "_"
+  end
+
+  return hidden_word
 end
 
-game_over = false
-
-until game_over
-  puts "Input a letter as your guess..."
-  user_letter = gets.chomp.downcase
-
+def check_letter(random_word, user_letter, hidden_word)
+  positions = []
   if random_word.include?(user_letter)
     random_word.each_char.with_index do |char, index|
       positions << index if char == user_letter
@@ -27,4 +28,14 @@ until game_over
     puts "not included"
     game_over = true
   end
+end
+
+hidden_word = create_hidden_word(random_word)
+game_over = false
+
+until game_over
+  puts "Input a letter as your guess..."
+  user_letter = gets.chomp.downcase
+
+  check_letter(random_word, user_letter, hidden_word)
 end
