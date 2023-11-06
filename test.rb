@@ -24,6 +24,7 @@ def check_letter(random_word, user_letter, hidden_word)
       if hidden_word.include?('_')
         next
       else
+        puts "You won, the word is '#{hidden_word}'!"
         return true
       end
     end
