@@ -1,4 +1,4 @@
-random_word = 'building'
+random_word = 'bui'
 positions = []
 
 def create_hidden_word(random_word)
@@ -21,12 +21,15 @@ def check_letter(random_word, user_letter, hidden_word)
       positions.each do |pos|
         hidden_word[pos] = user_letter
       end
+      if hidden_word.include?('_')
+        next
+      else
+        return true
+      end
     end
     puts hidden_word
-    game_over = true
   else
     puts "not included"
-    game_over = true
   end
 end
 
@@ -37,5 +40,5 @@ until game_over
   puts "Input a letter as your guess..."
   user_letter = gets.chomp.downcase
 
-  check_letter(random_word, user_letter, hidden_word)
+  game_over = check_letter(random_word, user_letter, hidden_word)
 end
