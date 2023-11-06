@@ -42,3 +42,4 @@ until game_over
 
   game_over = check_letter(random_word, user_letter, hidden_word)
 end
+# end
