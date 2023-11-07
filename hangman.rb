@@ -69,7 +69,7 @@ until game_over
     remaining_attempts = check_counter(attempts, word_length)
   end
   if remaining_attempts == 0
-    puts "You lost!"
+    puts "You lost! The word was '#{random_word}.'"
     game_over = true
   else
     puts remaining_attempts
