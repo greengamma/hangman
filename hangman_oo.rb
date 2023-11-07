@@ -3,12 +3,12 @@ require 'json'
 class Game
   attr_accessor :player, :score, :level
 
-def initialize()
-  dict_file = File.read("hangman.txt")
-  dictionary = dict_file.split(" ")
-  word_length_dict = dictionary.select { |word| word.length > 4 && word.length < 13 }
-  random_word = word_length_dict.sample
-  word_length = random_word.length
+def initialize
+  @dict_file = File.read("hangman.txt")
+  @dictionary = dict_file.split(" ")
+  @word_length_dict = dictionary.select { |word| word.length > 4 && word.length < 13 }
+  @random_word = word_length_dict.sample
+  @word_length = random_word.length
 end
 
 end
