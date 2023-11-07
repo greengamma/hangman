@@ -3,8 +3,9 @@ dict_file = File.read("hangman.txt")
 dictionary = dict_file.split(" ")
 word_length_dict = dictionary.select { |word| word.length > 4 && word.length < 13 }
 random_word = word_length_dict.sample
+word_length = random_word.length
 
-# puts random_word
+puts random_word
 
 positions = []
 
@@ -41,12 +42,31 @@ def check_letter(random_word, user_letter, hidden_word)
   end
 end
 
+def check_counter(attempts, word_length)
+  if word_length - attempts > 0
+    remaining_attempts = "Remaining attempts: #{word_length - attempts}."
+  else
+    remaining_attempts = 0
+  end
+  return remaining_attempts
+end
+
 hidden_word = create_hidden_word(random_word)
 game_over = false
+attempts = 1
 
 until game_over
   puts "Input a letter as your guess..."
   user_letter = gets.chomp.downcase
 
   game_over = check_letter(random_word, user_letter, hidden_word)
+  attempts += 1
+  remaining_attempts = check_counter(attempts, word_length)
+  if remaining_attempts == 0
+    puts "You lost!"
+    game_over = true
+  else
+    puts remaining_attempts
+  end
+
 end
