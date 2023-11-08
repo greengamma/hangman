@@ -6,10 +6,6 @@ class Game
 def initialize(file_path)
   @file_path = file_path
   @dict_file = ''
-  @dictionary = ''
-  @word_length_dict
-  @word_length = 0
-  @random_word = ''
 end
 
 def load_file
