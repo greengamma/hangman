@@ -10,7 +10,6 @@ def initialize
   @random_word = word_length_dict.sample
   @word_length = random_word.length
 end
-
 end
 
 
