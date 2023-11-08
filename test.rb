@@ -29,8 +29,19 @@ def create_random_word
   puts @word_length
 end
 
+def create_hidden_word
+  # Create same length word with hiding chars
+  @hidden_word  = ''
+  @random_word.each_char do |char|
+
+    @hidden_word += "_"
+  end
+  puts @hidden_word
+end
+
 end
 
 game = Game.new("hangman.txt")
 game.load_file
 game.create_random_word
+game.create_hidden_word
