@@ -22,15 +22,15 @@ end
 
 def check_letter(random_word, user_letter, hidden_word)
   positions = []
-  if random_word == @user_letter
+  if random_word == user_letter
     puts "You won, the word is '#{random_word}'!"
     return true
-  elsif random_word.include?(@user_letter)
+  elsif random_word.include?(user_letter)
     random_word.each_char.with_index do |char, index|
-      positions << index if char == @user_letter
+      positions << index if char == user_letter
       # fill hidden word with correct user letters at specific pos
       positions.each do |pos|
-        hidden_word[pos] = @user_letter
+        hidden_word[pos] = user_letter
       end
       if hidden_word.include?('_')
         next
@@ -60,9 +60,9 @@ attempts = 1
 
 until game_over
   puts "Input a letter as your guess..."
-  @user_letter = gets.chomp.downcase
+  user_letter = gets.chomp.downcase
 
-  if game_over = check_letter(random_word, @user_letter, hidden_word)
+  if game_over = check_letter(random_word, user_letter, hidden_word)
     break
   else
     attempts += 1

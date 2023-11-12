@@ -24,7 +24,6 @@ def create_random_word
   @dictionary = @dict_file.split(" ")
   @word_length_dict = @dictionary.select { |word| word.length > 4 && word.length < 13 }
   @random_word = @word_length_dict.sample
-  puts "I am here!!"
   @word_length = @random_word.length
   puts @random_word
   puts @word_length

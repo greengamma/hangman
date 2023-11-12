@@ -39,17 +39,17 @@ def create_hidden_word
   puts @hidden_word
 end
 
-def check_letter
-  @@positions = []
-  if @random_word == @user_letter
+def check_letter(user_letter)
+  @positions = []
+  if @random_word == user_letter
     puts "You won, the word is '#{@random_word}'!"
     return true
-  elsif @random_word.include?(@user_letter)
+  elsif @random_word.include?(user_letter)
     @random_word.each_char.with_index do |char, index|
-      @positions << index if char == @user_letter
+      @positions << index if char == user_letter
       # fill hidden word with correct user letters at specific pos
       @positions.each do |pos|
-        @hidden_word[pos] = @user_letter
+        @hidden_word[pos] = user_letter
       end
       if @hidden_word.include?('_')
         next
@@ -64,6 +64,15 @@ def check_letter
   end
 end
 
+def check_counter(attempts, word_length)
+  if @word_length - attempts > 0
+    remaining_attempts = "Remaining attempts: #{@word_length - attempts}."
+  else
+    remaining_attempts = 0
+  end
+  return remaining_attempts
+end
+
 end
 
 game = Game.new("hangman.txt")
@@ -71,22 +80,24 @@ game.load_file
 game.create_random_word
 game.create_hidden_word
 
+game_over = false
+attempts = 1
 
-# until game_over
-#   puts "Input a letter as your guess..."
-#   @user_letter = gets.chomp.downcase
+until game_over
+  puts "Input a letter as your guess..."
+  user_letter = gets.chomp.downcase
 
-#   if game_over = check_letter(random_word, @user_letter, hidden_word)
-#     break
-#   else
-#     attempts += 1
-#     remaining_attempts = check_counter(attempts, word_length)
-#   end
-#   if remaining_attempts == 0
-#     puts "You lost! The word was '#{random_word}.'"
-#     game_over = true
-#   else
-#     puts remaining_attempts
-#   end
+  if game_over = game.check_letter(user_letter)
+    break
+  else
+    attempts += 1
+    remaining_attempts = game.check_counter(attempts, @word_length)
+  end
+  if remaining_attempts == 0
+    puts "You lost! The word was '#{@random_word}.'"
+    game_over = true
+  else
+    puts remaining_attempts
+  end
 
-# end
+end
