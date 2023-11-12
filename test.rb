@@ -1,7 +1,7 @@
 require 'json'
 
 class Game
-  attr_reader :file_contents
+  attr_reader :dict_file
 
 def initialize(file_path)
   @file_path = file_path
@@ -72,21 +72,21 @@ game.create_random_word
 game.create_hidden_word
 
 
-until game_over
-  puts "Input a letter as your guess..."
-  @user_letter = gets.chomp.downcase
+# until game_over
+#   puts "Input a letter as your guess..."
+#   @user_letter = gets.chomp.downcase
 
-  if game_over = check_letter(random_word, @user_letter, hidden_word)
-    break
-  else
-    attempts += 1
-    remaining_attempts = check_counter(attempts, word_length)
-  end
-  if remaining_attempts == 0
-    puts "You lost! The word was '#{random_word}.'"
-    game_over = true
-  else
-    puts remaining_attempts
-  end
+#   if game_over = check_letter(random_word, @user_letter, hidden_word)
+#     break
+#   else
+#     attempts += 1
+#     remaining_attempts = check_counter(attempts, word_length)
+#   end
+#   if remaining_attempts == 0
+#     puts "You lost! The word was '#{random_word}.'"
+#     game_over = true
+#   else
+#     puts remaining_attempts
+#   end
 
-end
+# end

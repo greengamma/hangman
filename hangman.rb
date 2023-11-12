@@ -20,7 +20,7 @@ def create_hidden_word(random_word)
   return hidden_word
 end
 
-def check_letter(random_word, @user_letter, hidden_word)
+def check_letter(random_word, user_letter, hidden_word)
   positions = []
   if random_word == @user_letter
     puts "You won, the word is '#{random_word}'!"
