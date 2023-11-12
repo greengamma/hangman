@@ -73,6 +73,19 @@ def check_counter(attempts, word_length)
   return remaining_attempts
 end
 
+def save_game
+ game_state = {
+  random_word: @random_word,
+  hidden_word: @hidden_word,
+  remaining_attempts: @remaining_attempts
+ }
+
+ File.open("savegame.json", "w") do |file|
+  file.write(game_state.to_json)
+ end
+puts "Game saved."
+end
+
 end
 
 game = Game.new("hangman.txt")
@@ -84,19 +97,25 @@ game_over = false
 attempts = 1
 
 until game_over
-  puts "Input a letter as your guess..."
+  puts "Input a letter as your guess... (type 'save' to save game!)"
   user_letter = gets.chomp.downcase
 
-  if game_over = game.check_letter(user_letter)
+  case user_letter
+  when 'save'
+    game.save_game
     break
   else
-    attempts += 1
-    remaining_attempts = game.check_counter(attempts, @word_length)
-  end
-  if remaining_attempts == 0
-    puts "You lost! The word was '#{@random_word}.'"
-    game_over = true
-  else
-    puts remaining_attempts
+    if game_over = game.check_letter(user_letter)
+      break
+    else
+      attempts += 1
+      remaining_attempts = game.check_counter(attempts, @word_length)
+    end
+    if remaining_attempts == 0
+      puts "You lost! The word was '#{@random_word}.'"
+      game_over = true
+    else
+      puts remaining_attempts
+    end
   end
 end
