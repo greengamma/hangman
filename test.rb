@@ -99,5 +99,4 @@ until game_over
   else
     puts remaining_attempts
   end
-
 end
