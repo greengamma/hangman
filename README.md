@@ -1,1 +1,1 @@
-# hangman
+# Hangman - a classic guessing game!
