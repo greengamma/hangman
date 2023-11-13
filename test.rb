@@ -9,7 +9,14 @@ def initialize(file_path)
   else
     @file_path = file_path
     @dict_file = ''
+    new_game
   end
+end
+
+def new_game
+  game.load_file
+  game.create_random_word
+  game.create_hidden_word
 end
 
 def self.saved_game_exists?
@@ -88,7 +95,8 @@ def save_game
   hidden_word: @hidden_word,
   remaining_attempts: @remaining_attempts,
   word_length: @word_length,
-  attempts: attempts
+  file_path: @file_path,
+  # attempts: attempts
  }
 
  File.open("savegame.json", "w") do |file|
@@ -105,7 +113,8 @@ def load_game
     @hidden_word = game_state[:hidden_word]
     @remaining_attempts = game_state[:remaining_attempts]
     @word_length = game_state[:word_length]
-    attempts = game_state[:attempts]
+    @file_path = game_state[:file_path]
+    # attempts = game_state[:attempts]
   rescue JSON::ParserError
     puts "Failed to parse saved game. Starting a new game."
   end
@@ -114,9 +123,9 @@ end
 end
 
 game = Game.new("hangman.txt")
-game.load_file
-game.create_random_word
-game.create_hidden_word
+# game.load_file
+# game.create_random_word
+# game.create_hidden_word
 
 game_over = false
 attempts = 1
@@ -137,6 +146,7 @@ until game_over
       remaining_attempts = game.check_counter(attempts)
     end
     if remaining_attempts == 0
+      break
       game_over = game.check_counter(attempts)
     else
       puts remaining_attempts
