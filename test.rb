@@ -4,8 +4,16 @@ class Game
   attr_reader :dict_file
 
 def initialize(file_path)
-  @file_path = file_path
-  @dict_file = ''
+  if Game.saved_game_exists?
+    load_game
+  else
+    @file_path = file_path
+    @dict_file = ''
+  end
+end
+
+def self.saved_game_exists?
+  File.exist?("savegame.json")
 end
 
 def load_file
@@ -64,11 +72,13 @@ def check_letter(user_letter)
   end
 end
 
-def check_counter(attempts, word_length)
+def check_counter(attempts)
   if @word_length - attempts > 0
     remaining_attempts = "Remaining attempts: #{@word_length - attempts}."
   else
-    remaining_attempts = 0
+    remaining_attempts == 0
+    puts "You lost, the word is '#{@random_word}'!"
+    return true
   end
   return remaining_attempts
 end
@@ -77,13 +87,29 @@ def save_game
  game_state = {
   random_word: @random_word,
   hidden_word: @hidden_word,
-  remaining_attempts: @remaining_attempts
+  remaining_attempts: @remaining_attempts,
+  word_length: @word_length,
+  attempts: attempts
  }
 
  File.open("savegame.json", "w") do |file|
   file.write(game_state.to_json)
  end
 puts "Game saved."
+end
+
+def load_game
+  begin
+    game_state = JSON.parse(File.read("savegame.json"), symbolize_names: true)
+
+    @random_word = game_state[:random_word]
+    @hidden_word = game_state[:hidden_word]
+    @remaining_attempts = game_state[:remaining_attempts]
+    @word_length = game_state[:word_length]
+    attempts = game_state[:attempts]
+  rescue JSON::ParserError
+    puts "Failed to parse saved game. Starting a new game."
+  end
 end
 
 end
@@ -109,11 +135,11 @@ until game_over
       break
     else
       attempts += 1
-      remaining_attempts = game.check_counter(attempts, @word_length)
+      remaining_attempts = game.check_counter(attempts)
     end
     if remaining_attempts == 0
-      puts "You lost! The word was '#{@random_word}.'"
-      game_over = true
+      puts "Are we here?"
+      game_over = game.check_counter(attempts)
     else
       puts remaining_attempts
     end
