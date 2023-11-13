@@ -76,9 +76,8 @@ def check_counter(attempts)
   if @word_length - attempts > 0
     remaining_attempts = "Remaining attempts: #{@word_length - attempts}."
   else
-    remaining_attempts == 0
+    remaining_attempts = 0
     puts "You lost, the word is '#{@random_word}'!"
-    return true
   end
   return remaining_attempts
 end
@@ -138,7 +137,6 @@ until game_over
       remaining_attempts = game.check_counter(attempts)
     end
     if remaining_attempts == 0
-      puts "Are we here?"
       game_over = game.check_counter(attempts)
     else
       puts remaining_attempts
