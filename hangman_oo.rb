@@ -1,4 +1,4 @@
-require 'json'
+require 'json' # for saving/loading
 
 class Game
   attr_reader :dict_file
